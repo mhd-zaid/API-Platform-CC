@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
@@ -18,6 +21,7 @@ use Symfony\Component\Uid\Uuid;
 #[ApiResource(
     operations: [
         new Get(),
+        new GetCollection(),
         new Post(),
         new Put(),
         new Patch()
@@ -32,6 +36,7 @@ class Category
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
+    #[ApiFilter(SearchFilter::class,strategy: SearchFilter::STRATEGY_IEXACT)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Recipe::class)]
@@ -43,7 +48,7 @@ class Category
     }
 
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
