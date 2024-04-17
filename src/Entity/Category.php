@@ -20,8 +20,8 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
+        new Get(paginationItemsPerPage:50),
+        new GetCollection(paginationItemsPerPage:50),
         new Post(),
         new Put(),
         new Patch()

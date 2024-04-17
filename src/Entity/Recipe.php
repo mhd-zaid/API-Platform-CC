@@ -63,10 +63,14 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\ManyToMany(targetEntity: Quantity::class, inversedBy: 'recipe')]
+    private Collection $quantities;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->quantities = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -211,6 +215,30 @@ class Recipe
                 $comment->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipe>
+     */
+    public function getQuantites(): Collection
+    {
+        return $this->quantities;
+    }
+
+    public function addQuantity(Quantity $quantity): static
+    {
+        if (!$this->quantities->contains($quantity)) {
+            $this->quantities->add($quantity);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantity(Quantity $quantity): static
+    {
+        $this->quantities->removeElement($quantity);
 
         return $this;
     }

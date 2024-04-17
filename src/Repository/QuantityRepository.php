@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Receipe;
+use App\Entity\Quantity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Receipe>
+ * @extends ServiceEntityRepository<Quantity>
  *
- * @method Receipe|null find($id, $lockMode = null, $lockVersion = null)
- * @method Receipe|null findOneBy(array $criteria, array $orderBy = null)
- * @method Receipe[]    findAll()
- * @method Receipe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Quantity|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Quantity|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Quantity[]    findAll()
+ * @method Quantity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReceipeRepository extends ServiceEntityRepository
+class QuantityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Receipe::class);
+        parent::__construct($registry, Quantity::class);
     }
 
 //    /**
-//     * @return Receipe[] Returns an array of Receipe objects
+//     * @return Quantity[] Returns an array of Quantity objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class ReceipeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Receipe
+//    public function findOneBySomeField($value): ?Quantity
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

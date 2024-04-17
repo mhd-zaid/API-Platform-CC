@@ -25,6 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Put(),
         new Patch()
     ],
+    paginationItemsPerPage:15
 )]
 class Ingredient
 {
@@ -41,12 +42,13 @@ class Ingredient
     #[ORM\ManyToMany(targetEntity: Recipe::class, inversedBy: 'ingredients')]
     private Collection $recipes;
 
-    #[ORM\Column]
-    private ?int $quantity = null;
+    #[ORM\ManyToMany(targetEntity: Quantity::class, inversedBy: 'ingredient')]
+    private Collection $quantities;
 
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
+        $this->quantities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,14 +92,26 @@ class Ingredient
         return $this;
     }
 
-    public function getQuantity(): ?int
+    /**
+     * @return Collection<int, Recipe>
+     */
+    public function getQuantites(): Collection
     {
-        return $this->quantity;
+        return $this->quantities;
     }
 
-    public function setQuantity(int $quantity): static
+    public function addQuantity(Quantity $quantity): static
     {
-        $this->quantity = $quantity;
+        if (!$this->quantities->contains($quantity)) {
+            $this->quantities->add($quantity);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantity(Quantity $quantity): static
+    {
+        $this->quantities->removeElement($quantity);
 
         return $this;
     }
